@@ -1,138 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Folder Report - {{ $folder->folder_name }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $folder->folder_name }}</title>
     <style>
-        body { font-family: 'DejaVu Sans', sans-serif; line-height: 1.6; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .section { margin-bottom: 25px; }
-        .section-title { 
-            color: #2c5282; 
-            border-bottom: 2px solid #2c5282;
-            padding-bottom: 5px;
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            background-color: white;
+        }
+
+        .document-page {
+            width: 210mm;
+            height: 297mm;
+            margin: auto;
+            background-color: white;
+            padding: 20mm;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .official-titles h1 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .official-titles h2 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .institution-info h4,
+        .institution-info h5 {
+            font-size: 14px;
+            margin: 2px 0;
+        }
+
+        .patient-info-section {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            border: 1px solid #000;
+            padding: 10px;
             margin-bottom: 15px;
         }
-        .info-table { width: 100%; margin-bottom: 25px; }
-        .info-table td { padding: 8px; vertical-align: top; }
-        .info-table td:first-child { 
-            width: 30%; 
+
+        .patient-details,
+        .patient-number {
+            width: 48%;
+        }
+
+        .patient-field {
+            display: flex;
+            margin-bottom: 5px;
+        }
+
+        .patient-field label {
             font-weight: bold;
-            color: #4a5568;
+            min-width: 100px;
         }
-        .report-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
+
+        .request-content {
+            text-align: justify;
         }
-        .report-table th,
-        .report-table td {
-            border: 1px solid #cbd5e0;
-            padding: 10px;
-            text-align: left;
-        }
-        .report-table th {
-            background-color: #f7fafc;
-            color: #4a5568;
-        }
-        .footer {
+
+        .request-title {
             text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .signature-section {
+            margin-top: 50px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .date-section {
             margin-top: 30px;
-            color: #718096;
-            font-size: 0.9em;
+            text-align: left;
         }
     </style>
 </head>
+
 <body>
-    <div class="header">
-        <h1>{{ $folder->folder_name }}'s Folder Report</h1>
-        <p>Generated: {{ now()->format('d/m/Y H:i') }}</p>
-    </div>
+    <div class="document-page">
 
-    <div class="section">
-        <h2 class="section-title">Personal Information</h2>
-        <table class="info-table">
-            <tr>
-                <td>User ID:</td>
-                <td>{{ $folder->user_id }}</td>
-            </tr>
-            <tr>
-                <td>Birth Date:</td>
-                <td>{{ \Carbon\Carbon::parse($folder->birth_date)->format('d/m/Y') }}</td>
-            </tr>
-            <tr>
-                <td>Phone Number:</td>
-                <td>{{ $folder->phone_number }}</td>
-            </tr>
-            <tr>
-                <td>Address:</td>
-                <td>{{ $folder->full_address ?? 'N/A' }}</td>
-            </tr>
-            <tr>
-                <td>Region:</td>
-                <td>{{ $folder->region ?? 'N/A' }}</td>
-            </tr>
-        </table>
-    </div>
+        <div class="header-section">
+            <div class="official-titles">
+                <h1>الجمهورية الجزائرية الديمقراطية الشعبية</h1>
+                <h2>REPUBLIQUE ALGERIENNE DEMOCRATIQUE ET POPULAIRE</h2>
+            </div>
+            <div class="institution-info">
+                <h4>اسم المؤسسة</h4>
+                <h5>..............................................................................</h5>
+            </div>
+        </div>
 
-    <div class="section">
-        <h2 class="section-title">Education Information</h2>
-        <table class="info-table">
-            <tr>
-                <td>Education Level:</td>
-                <td>{{ $folder->education_level ?? 'N/A' }}</td>
-            </tr>
-            <tr>
-                <td>Start Date:</td>
-                <td>{{ $folder->start_date ? \Carbon\Carbon::parse($folder->start_date)->format('d/m/Y') : 'N/A' }}</td>
-            </tr>
-        </table>
-    </div>
+        <div class="patient-info-section">
+            <div class="patient-details">
+                <div class="patient-field">
+                    <label>Nom:</label>
+                    <p>Taha</p>
+                </div>
+                <div class="patient-field">
+                    <label>Prénom:</label>
+                    <p>Mansouri</p>
+                </div>
+                <div class="patient-field">
+                    <label>Date de naissance:</label>
+                    <p>{{ \Carbon\Carbon::parse($folder->birth_date)->format('d/m/Y') }}</p>
+                </div>
+                <div class="patient-field">
+                    <label>Adresse:</label>
+                    <p>{{ $folder->full_address ?? 'N/A' }}</p>
+                </div>
+            </div>
+            <div class="patient-number">
+                <label>N° :</label>
+                <p>................</p>
+            </div>
+        </div>
 
-    <div class="section">
-        <h2 class="section-title">Family Information</h2>
-        <table class="info-table">
-            <tr>
-                <td>Family Members:</td>
-                <td>{{ $folder->family_number ?? 'N/A' }}</td>
-            </tr>
-            <tr>
-                <td>Total Siblings:</td>
-                <td>{{ $folder->total_siblings ?? 'N/A' }}</td>
-            </tr>
-            <tr>
-                <td>Sibling Position:</td>
-                <td>{{ $folder->sibling_position ?? 'N/A' }}</td>
-            </tr>
-        </table>
-    </div>
+        <div class="request-content">
+            <h2 class="request-title">DEMANDE D'AVIS</h2>
 
-    <div class="section">
-        <h2 class="section-title">Reports</h2>
-        @if($folder->reports->count() > 0)
-            <table class="report-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Message</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($folder->reports as $report)
-                    <tr>
-                        <td>{{ \Carbon\Carbon::parse($report->date)->format('d/m/Y') }}</td>
-                        <td>{{ $report->message }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p>No reports available for this folder.</p>
-        @endif
-    </div>
+            <p>Cher confrère,</p>
 
-    <div class="footer">
-        <p>Generated by Family Counseling System</p>
-        <p>Page <span class="page-number"></span></p>
+            <p>
+                Permettez-moi de vous adresser le (a) patient(e) sus nommé âgé de .................
+            </p>
+            <p>
+                ans, qui présente : <span class="input-field">......................................</span>
+            </p>
+            <p>
+                depuis <span class="input-field">.................................</span>
+            </p>
+
+            <p>Je vous le confie pour un avis spécialisé. Confraternellement.</p>
+
+            <div class="date-section">
+                <p>Fait à : <span class="input-field">...........................................</span></p>
+                <p>Le : <span class="input-field">{{ now()->format('d/m/Y H:i') }}</span></p>
+            </div>
+
+            <div class="signature-section">
+                <p>Signature du psychologue</p>
+            </div>
+
+        </div>
     </div>
 </body>
+
 </html>
